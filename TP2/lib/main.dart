@@ -1,7 +1,16 @@
-import 'dart:async';
-import "dart:math" show pi;
-
 import 'package:flutter/material.dart';
+import 'package:tp_2/Exercice1.dart';
+import 'package:tp_2/Exercice4c.dart';
+
+import 'Exercice2.dart';
+import 'Exercice2b.dart';
+import 'Exercice3.dart';
+import 'Exercice4a.dart';
+import 'Exercice4b.dart';
+import 'Exercice4c.dart';
+import 'Exercice5a.dart';
+import 'Exercice5b.dart';
+import 'Exercice7.dart';
 
 void main() {
   runApp(MyApp());
@@ -20,22 +29,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-// Exercice 1
-/*class MyHomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Exercice_1'),
-      ),
-      body: const Image(
-        image: AssetImage('assets/images/Image.jpg'),
-      ),
-    );
-  }
-}*/
-
-//Exercice 2
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key}) : super(key: key);
 
@@ -44,229 +37,172 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  double _rotateXSliderValue;
-  double _rotateZSliderValue;
-  double _translateZSliderValue;
-  bool _mirror;
-  bool _play;
-
-  @override
-  void initState() {
-    super.initState();
-    _rotateXSliderValue = 0;
-    _rotateZSliderValue = 0;
-    _translateZSliderValue = 100;
-    _mirror = false;
-    _play = false;
-  }
-
-  void animateRotationX(Timer t) {
-    if (_play == true) {
-      setState(() {
-        if (_rotateXSliderValue < 180) {
-          _rotateXSliderValue++;
-        } else {
-          _rotateXSliderValue = 0;
-          animateRotationX(t);
-        }
-      });
-    } else {
-      t.cancel();
-    }
-  }
-
-  void animateRotationZ(Timer t) {
-    if (_play == true) {
-      setState(() {
-        if (_rotateZSliderValue < 180) {
-          _rotateZSliderValue++;
-        } else {
-          _rotateZSliderValue = 0;
-          animateRotationZ(t);
-        }
-      });
-    } else {
-      t.cancel();
-    }
-  }
-
-  void animateTranslationZ(Timer t) {
-    if (_play == true) {
-      setState(() {
-        if (_translateZSliderValue > 0) {
-          _translateZSliderValue--;
-        } else {
-          _translateZSliderValue = 100;
-          animateTranslationZ(t);
-        }
-      });
-    } else {
-      t.cancel();
-    }
-  }
-
+  bool _play = false;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text('Exercice_2'),
+    return ListView(
+      children: <Widget>[
+        Card(
+          child: ListTile(
+            leading: FlutterLogo(size: 56.0),
+            title: Text('Exercice 1'),
+            subtitle: Text('Display image'),
+            trailing: Icon(Icons.play_arrow),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Exercice1(),
+                  ));
+            },
+            selected: true,
+          ),
         ),
-        body: Center(
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-              Container(
-                width: 400,
-                clipBehavior: Clip.hardEdge,
-                decoration: BoxDecoration(color: Colors.white),
-                child: Transform(
-                  alignment: Alignment.center,
-                  transform: Matrix4(
-                    1,
-                    0,
-                    0,
-                    0,
-                    0,
-                    1,
-                    0,
-                    0,
-                    0,
-                    0,
-                    1,
-                    0,
-                    0,
-                    0,
-                    0,
-                    1,
-                  )
-                    ..rotateX(pi / 180 * _rotateXSliderValue)
-                    ..rotateY(_mirror ? pi : 0)
-                    ..rotateZ(pi / 180 * _rotateZSliderValue)
-                    ..scale(_translateZSliderValue / 100),
-                  child: Image(
-                    image: AssetImage('assets/images/Image.jpg'),
-                  ),
-                ),
-              ),
-              //),
-              Container(
-                  width: 230,
-                  child: Column(children: [
-                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                      Text(
-                        'Rotate X',
-                        style: TextStyle(
-                            fontSize: 10,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xFF0A3068)),
-                      ),
-                      Slider(
-                        value: _rotateXSliderValue,
-                        min: 0,
-                        max: 180,
-                        label: _rotateXSliderValue.round().toString(),
-                        onChanged: (double value) {
-                          setState(() {
-                            _rotateXSliderValue = value;
-                          });
-                        },
-                      )
-                    ]),
-                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                      Text(
-                        'Rotate Z',
-                        style: TextStyle(
-                            fontSize: 10,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xFF0A3068)),
-                      ),
-                      Slider(
-                        value: _rotateZSliderValue,
-                        min: 0,
-                        max: 180,
-                        label: _rotateZSliderValue.round().toString(),
-                        onChanged: (double value) {
-                          const d = const Duration(milliseconds: 50);
-                          setState(() {
-                            _rotateZSliderValue = value;
-                          });
-                        },
-                      )
-                    ]),
-                    Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                      Text(
-                        'Mirror :',
-                        style: TextStyle(
-                            fontSize: 10,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xFF0A3068)),
-                      ),
-                      SizedBox(
-                        width: 80,
-                      ),
-                      Checkbox(
-                        value: _mirror,
-                        onChanged: (value) {
-                          setState(() {
-                            _mirror = !_mirror;
-                          });
-                        },
-                      ),
-                    ]),
-                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                      Text(
-                        'Scale',
-                        style: TextStyle(
-                            fontSize: 10,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xFF0A3068)),
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Slider(
-                        value: _translateZSliderValue,
-                        min: 0,
-                        max: 100,
-                        label: _translateZSliderValue.round().toString(),
-                        onChanged: (double value) {
-                          setState(() {
-                            _translateZSliderValue = value;
-                          });
-                        },
-                      )
-                    ]),
-                    SizedBox(
-                        width: 40,
-                        height: 40,
-                        child: RaisedButton(
-                          padding:
-                              EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                          color: Colors.blue,
-                          shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(30))),
-                          child: IconButton(
-                              icon: _play
-                                  ? Icon(Icons.pause)
-                                  : Icon(Icons.play_arrow),
-                              color: Colors.white,
-                              onPressed: () {
-                                setState(() {
-                                  _play = !_play;
-                                  Duration d1 = Duration(milliseconds: 20);
-                                  Duration d2 = Duration(milliseconds: 30);
-                                  Duration d3 = Duration(milliseconds: 10);
-                                  if (_play == true) {
-                                    Timer.periodic(d1, animateRotationX);
-                                    Timer.periodic(d2, animateRotationZ);
-                                    Timer.periodic(d3, animateTranslationZ);
-                                  }
-                                });
-                              }),
-                          onPressed: () {},
-                        )),
-                  ]))
-            ])));
+        Card(
+          child: ListTile(
+            leading: FlutterLogo(size: 56.0),
+            title: Text('Exercice 2'),
+            subtitle: Text('Rotate and resize image'),
+            trailing: Icon(Icons.play_arrow),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Exercice2(),
+                  ));
+            },
+            selected: true,
+          ),
+        ),
+        Card(
+          child: ListTile(
+            leading: FlutterLogo(size: 56.0),
+            title: Text('Exercice 2b'),
+            subtitle: Text('Animated Rotate and resize image'),
+            trailing: Icon(Icons.play_arrow),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Exercice2b(),
+                  ));
+            },
+            selected: true,
+          ),
+        ),
+        Card(
+          child: ListTile(
+            leading: FlutterLogo(size: 56.0),
+            title: Text('Exercice 3'),
+            subtitle: Text('Displat a Tile'),
+            trailing: Icon(Icons.play_arrow),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Exercice3(),
+                  ));
+            },
+            selected: true,
+          ),
+        ),
+        Card(
+          child: ListTile(
+            leading: FlutterLogo(size: 56.0),
+            title: Text('Exercice 4a'),
+            subtitle: Text('Grid of colored box'),
+            trailing: Icon(Icons.play_arrow),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Exercice4a(),
+                  ));
+            },
+            selected: true,
+          ),
+        ),
+        Card(
+          child: ListTile(
+            leading: FlutterLogo(size: 56.0),
+            title: Text('Exercice 4b'),
+            subtitle: Text('Fixed Grid of Cropped Image'),
+            trailing: Icon(Icons.play_arrow),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Exercice4b(),
+                  ));
+            },
+            selected: true,
+          ),
+        ),
+        Card(
+          child: ListTile(
+            leading: FlutterLogo(size: 56.0),
+            title: Text('Exercice 4c'),
+            subtitle: Text('Configurable Taquin Board'),
+            trailing: Icon(Icons.play_arrow),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Exercice4c(),
+                  ));
+            },
+            selected: true,
+          ),
+        ),
+        Card(
+          child: ListTile(
+            leading: FlutterLogo(size: 56.0),
+            title: Text('Exercice 5a'),
+            subtitle: Text('Moving Tiles'),
+            trailing: Icon(Icons.play_arrow),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Exercice5a(),
+                  ));
+            },
+            selected: true,
+          ),
+        ),
+        Card(
+          child: ListTile(
+            leading: FlutterLogo(size: 56.0),
+            title: Text('Exessrcice 5b'),
+            subtitle: Text('Moving Tiles in Grid'),
+            trailing: Icon(Icons.play_arrow),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Exercice5b(),
+                  ));
+            },
+            selected: true,
+          ),
+        ),
+        Card(
+          child: ListTile(
+            leading: FlutterLogo(size: 56.0),
+            title: Text('Exessrcice 7'),
+            subtitle: Text('Taquin Board'),
+            trailing: Icon(Icons.play_arrow),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Exercice7(),
+                  ));
+            },
+            selected: true,
+          ),
+        ),
+      ],
+    );
   }
 }
