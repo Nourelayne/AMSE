@@ -1,44 +1,7 @@
 import 'package:flutter/material.dart';
-import 'dart:math' as math;
 
-// ==============
-// Models
-// ==============
-
-math.Random random = new math.Random();
-
-class Tile {
-  Color color;
-
-  Tile(this.color);
-  Tile.randomColor() {
-    this.color = Color.fromARGB(
-        255, random.nextInt(255), random.nextInt(255), random.nextInt(255));
-  }
-}
-
-// ==============
-// Widgets
-// ==============
-
-class TileWidget extends StatelessWidget {
-  final Tile tile;
-
-  TileWidget(this.tile);
-
-  @override
-  Widget build(BuildContext context) {
-    return this.coloredBox();
-  }
-
-  Widget coloredBox() {
-    return Container(
-        color: tile.color,
-        child: Padding(
-          padding: EdgeInsets.all(70.0),
-        ));
-  }
-}
+import 'Tile2.dart';
+import 'TileWidget.dart';
 
 class Exercice5a extends StatefulWidget {
   @override

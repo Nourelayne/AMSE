@@ -2,43 +2,47 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-import 'Tile1.dart';
-
 Random random = new Random();
 
-class Exercice7 extends StatefulWidget {
-  @override
-  _Exercice7State createState() => _Exercice7State();
+class Tile {
+  int number;
+
+  Tile(this.number);
 }
 
-class _Exercice7State extends State<Exercice7> {
-  final imageUrl = 'assets/images/Image.jpg';
-  int numberOfRows = 3;
-  static int isEmptyValue;
+class TileWidget extends StatelessWidget {
+  final Tile tile;
 
-  bool started = false;
-  int counter = 0;
+  TileWidget(this.tile);
 
   @override
   Widget build(BuildContext context) {
-    final liste = <Widget>[];
-    for (double i = -1; i <= 1; i += 2 / (numberOfRows - 1)) {
-      for (double j = -1; j <= 1; j += 2 / (numberOfRows - 1)) {
-        liste.add(new Tile(imageURL: imageUrl, alignment: Alignment(j, i))
-            .croppedImageTile(1 / numberOfRows, 1 / numberOfRows));
-      }
-    }
-    void swapTiles(int index) {
-      var tempValue;
-      var tempIndex;
-      tempValue = liste[isEmptyValue];
-      tempIndex = isEmptyValue;
-      liste[isEmptyValue] = liste[index];
-      isEmptyValue = index;
-      liste[index] = tempValue;
-      index = tempIndex;
-    }
+    return Center(
+      child: Text('Tile ${tile.number}'),
+    );
+  }
+}
 
+class Exercice6 extends StatefulWidget {
+  @override
+  _Exercice6State createState() => _Exercice6State();
+}
+
+class _Exercice6State extends State<Exercice6> {
+  int numberOfRows = 3;
+  static int isEmptyValue;
+  List<Widget> liste;
+  bool started = false;
+  int counter = 0;
+
+  List<Widget> listeGenerator() {
+    liste =
+        List.generate(pow(numberOfRows, 2), (index) => TileWidget(Tile(index)));
+    return liste;
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           title: Text('Exercice_6'),
@@ -55,15 +59,20 @@ class _Exercice7State extends State<Exercice7> {
                 pow(numberOfRows, 2),
                 (index) => InkWell(
                     child: Container(
-                      child: index == isEmptyValue ? null : liste[index],
+                      child: listeGenerator()[index],
                       decoration: BoxDecoration(
+                          color: isEmptyValue == null
+                              ? Colors.grey
+                              : index == isEmptyValue
+                                  ? Colors.white
+                                  : Colors.grey,
                           border: Border.all(
                               color: isEmptyValue == null || started == false
                                   ? Colors.transparent
                                   : isClickable(index)
                                       ? Colors.red
                                       : Colors.transparent,
-                              width: 2)),
+                              width: 5)),
                     ),
                     onTap: () {
                       setState(() {
@@ -157,5 +166,16 @@ class _Exercice7State extends State<Exercice7> {
                 (index + numberOfRows == isEmptyValue))) ||
             (((isEmptyValue + numberOfRows < pow(numberOfRows, 2)) &&
                 (index - numberOfRows == isEmptyValue)))));
+  }
+
+  void swapTiles(int index) {
+    var tempValue;
+    var tempIndex;
+    tempValue = liste[isEmptyValue];
+    tempIndex = isEmptyValue;
+    liste[isEmptyValue] = liste[index];
+    isEmptyValue = index;
+    liste[index] = tempValue;
+    index = tempIndex;
   }
 }

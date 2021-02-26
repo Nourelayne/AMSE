@@ -6,41 +6,20 @@ Random random = new Random();
 
 class Tile {
   int number;
-  bool isEmpty;
-  bool isSwapable;
 
-  Tile(this.number, this.isEmpty, this.isSwapable);
+  Tile(this.number);
 }
 
-class TileWidget extends StatefulWidget {
+class TileWidget extends StatelessWidget {
   final Tile tile;
 
   TileWidget(this.tile);
 
   @override
-  _TileWidgetState createState() => _TileWidgetState();
-}
-
-class _TileWidgetState extends State<TileWidget> {
-  Tile tile;
-
-  @override
-  void initState() {
-    super.initState();
-    tile = widget.tile;
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Container(
-        decoration: BoxDecoration(
-            color: !tile.isEmpty ? Colors.grey : Colors.white,
-            border: Border.all(
-                color: tile.isSwapable ? Colors.red : Colors.transparent,
-                width: 5)),
-        child: Center(
-          child: Text('${tile.number}'),
-        ));
+    return Center(
+      child: Text('Tile ${tile.number}'),
+    );
   }
 }
 
@@ -52,43 +31,9 @@ class Exercice5b extends StatefulWidget {
 }
 
 class _Exercice5bState extends State<Exercice5b> {
-  int numberOfRows = 4;
-  List<Widget> liste;
-
-  List<Widget> listGenerator() {
-    int isEmptyValue = random.nextInt(pow(numberOfRows, 2) - 1);
-    liste = List.generate(
-        pow(numberOfRows, 2),
-        (index) => InkWell(
-            child: TileWidget(Tile(
-                index,
-                index == isEmptyValue ? true : false,
-                (isEmptyValue - index).abs() == 4 ||
-                        (isEmptyValue - index).abs() == 1
-                    ? true
-                    : false)),
-            onTap: () {
-              setState(() {
-                if ((isEmptyValue - index).abs() == 4) {
-                  print(
-                      '${liste[index].hashCode} ${liste[isEmptyValue].hashCode}');
-                  liste.insert(isEmptyValue, liste.removeAt(index));
-                  print(
-                      '${liste[index].hashCode} ${liste[isEmptyValue].hashCode}');
-                } else if ((isEmptyValue - index).abs() == 1) {
-                  print(
-                      '${liste[index].hashCode} ${liste[isEmptyValue].hashCode}');
-                  liste.insert(isEmptyValue, liste.removeAt(index));
-                  print(
-                      '${liste[index].hashCode} ${liste[isEmptyValue].hashCode}');
-                } else {
-                  print('${liste[index].hashCode}');
-                }
-              });
-            }));
-
-    return liste;
-  }
+  static int isEmptyValue = random.nextInt(pow(4, 2) - 1);
+  List<Widget> liste =
+      List.generate(pow(4, 2), (index) => TileWidget(Tile(index)));
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +48,47 @@ class _Exercice5bState extends State<Exercice5b> {
                 padding: const EdgeInsets.fromLTRB(20, 100, 20, 100),
                 crossAxisSpacing: 3,
                 mainAxisSpacing: 2,
-                crossAxisCount: numberOfRows,
-                children: listGenerator())));
+                crossAxisCount: 4,
+                children: List.generate(
+                    pow(4, 2),
+                    (index) => InkWell(
+                        child: Container(
+                          child: liste[index],
+                          decoration: BoxDecoration(
+                              color: index == isEmptyValue
+                                  ? Colors.white
+                                  : Colors.grey,
+                              border: Border.all(
+                                  color: isClickable(index)
+                                      ? Colors.red
+                                      : Colors.transparent,
+                                  width: 5)),
+                        ),
+                        onTap: () {
+                          setState(() {
+                            if (isClickable(index)) {
+                              swapTiles(index);
+                            }
+                          });
+                        })))));
+  }
+
+  bool isClickable(int index) {
+    return ((isEmptyValue != index) &&
+        (((isEmptyValue % 4 != 0) && (index + 1 == isEmptyValue)) ||
+            (((isEmptyValue + 1) % 4 != 0) && (index - 1 == isEmptyValue)) ||
+            (((isEmptyValue + 4 >= 0) && (index + 4 == isEmptyValue))) ||
+            (((isEmptyValue + 4 < 16) && (index - 4 == isEmptyValue)))));
+  }
+
+  void swapTiles(int index) {
+    var temp;
+    var temp2;
+    temp = liste[isEmptyValue];
+    temp2 = isEmptyValue;
+    liste[isEmptyValue] = liste[index];
+    isEmptyValue = index;
+    liste[index] = temp;
+    index = temp2;
   }
 }

@@ -10,6 +10,7 @@ import 'Exercice4b.dart';
 import 'Exercice4c.dart';
 import 'Exercice5a.dart';
 import 'Exercice5b.dart';
+import 'Exercice6.dart';
 import 'Exercice7.dart';
 
 void main() {
@@ -189,8 +190,24 @@ class _MyHomePageState extends State<MyHomePage> {
         Card(
           child: ListTile(
             leading: FlutterLogo(size: 56.0),
-            title: Text('Exessrcice 7'),
+            title: Text('Exessrcice 6'),
             subtitle: Text('Taquin Board'),
+            trailing: Icon(Icons.play_arrow),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Exercice6(),
+                  ));
+            },
+            selected: true,
+          ),
+        ),
+        Card(
+          child: ListTile(
+            leading: FlutterLogo(size: 56.0),
+            title: Text('Exessrcice 7'),
+            subtitle: Text('Taquin Board With Image'),
             trailing: Icon(Icons.play_arrow),
             onTap: () {
               Navigator.push(
