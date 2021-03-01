@@ -41,185 +41,221 @@ class _MyHomePageState extends State<MyHomePage> {
   bool _play = false;
   @override
   Widget build(BuildContext context) {
-    return ListView(
+    return Scaffold(
+        body: ListView(
       children: <Widget>[
-        Card(
-          child: ListTile(
-            leading: FlutterLogo(size: 56.0),
-            title: Text('Exercice 1'),
-            subtitle: Text('Display image'),
-            trailing: Icon(Icons.play_arrow),
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => Exercice1(),
-                  ));
-            },
-            selected: true,
+        Column(children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 20, bottom: 20),
+            child: Text(
+              'Road To a Taquin Board',
+              style: TextStyle(
+                  letterSpacing: 3,
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.lightBlue[600]),
+            ),
           ),
-        ),
-        Card(
-          child: ListTile(
-            leading: FlutterLogo(size: 56.0),
-            title: Text('Exercice 2'),
-            subtitle: Text('Rotate and resize image'),
-            trailing: Icon(Icons.play_arrow),
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => Exercice2(),
-                  ));
-            },
-            selected: true,
+          Card(
+            child: ListTile(
+              leading: FlutterLogo(size: 56.0),
+              title: Text(
+                'Display image',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              trailing: Icon(Icons.play_arrow),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Exercice1(),
+                    ));
+              },
+              selected: true,
+            ),
           ),
-        ),
-        Card(
-          child: ListTile(
-            leading: FlutterLogo(size: 56.0),
-            title: Text('Exercice 2b'),
-            subtitle: Text('Animated Rotate and resize image'),
-            trailing: Icon(Icons.play_arrow),
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => Exercice2b(),
-                  ));
-            },
-            selected: true,
+          Card(
+            child: ListTile(
+              leading: FlutterLogo(size: 56.0),
+              title: Text(
+                'Rotate and resize image',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              trailing: Icon(Icons.play_arrow),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Exercice2(),
+                    ));
+              },
+              selected: true,
+            ),
           ),
-        ),
-        Card(
-          child: ListTile(
-            leading: FlutterLogo(size: 56.0),
-            title: Text('Exercice 3'),
-            subtitle: Text('Displat a Tile'),
-            trailing: Icon(Icons.play_arrow),
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => Exercice3(),
-                  ));
-            },
-            selected: true,
+          Card(
+            child: ListTile(
+              leading: FlutterLogo(size: 56.0),
+              title: Text(
+                'Animated Rotate and resize image',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              trailing: Icon(Icons.play_arrow),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Exercice2b(),
+                    ));
+              },
+              selected: true,
+            ),
           ),
-        ),
-        Card(
-          child: ListTile(
-            leading: FlutterLogo(size: 56.0),
-            title: Text('Exercice 4a'),
-            subtitle: Text('Grid of colored box'),
-            trailing: Icon(Icons.play_arrow),
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => Exercice4a(),
-                  ));
-            },
-            selected: true,
+          Card(
+            child: ListTile(
+              leading: FlutterLogo(size: 56.0),
+              title: Text(
+                'Display a Tile as a Cropped Image',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              trailing: Icon(Icons.play_arrow),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Exercice3(),
+                    ));
+              },
+              selected: true,
+            ),
           ),
-        ),
-        Card(
-          child: ListTile(
-            leading: FlutterLogo(size: 56.0),
-            title: Text('Exercice 4b'),
-            subtitle: Text('Fixed Grid of Cropped Image'),
-            trailing: Icon(Icons.play_arrow),
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => Exercice4b(),
-                  ));
-            },
-            selected: true,
+          Card(
+            child: ListTile(
+              leading: FlutterLogo(size: 56.0),
+              title: Text(
+                'Grid of colored box',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              trailing: Icon(Icons.play_arrow),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Exercice4a(),
+                    ));
+              },
+              selected: true,
+            ),
           ),
-        ),
-        Card(
-          child: ListTile(
-            leading: FlutterLogo(size: 56.0),
-            title: Text('Exercice 4c'),
-            subtitle: Text('Configurable Taquin Board'),
-            trailing: Icon(Icons.play_arrow),
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => Exercice4c(),
-                  ));
-            },
-            selected: true,
+          Card(
+            child: ListTile(
+              leading: FlutterLogo(size: 56.0),
+              title: Text(
+                'Fixed Grid of Cropped Image',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              trailing: Icon(Icons.play_arrow),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Exercice4b(),
+                    ));
+              },
+              selected: true,
+            ),
           ),
-        ),
-        Card(
-          child: ListTile(
-            leading: FlutterLogo(size: 56.0),
-            title: Text('Exercice 5a'),
-            subtitle: Text('Moving Tiles'),
-            trailing: Icon(Icons.play_arrow),
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => Exercice5a(),
-                  ));
-            },
-            selected: true,
+          Card(
+            child: ListTile(
+              leading: FlutterLogo(size: 56.0),
+              title: Text(
+                'Configurable Taquin Board',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              trailing: Icon(Icons.play_arrow),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Exercice4c(),
+                    ));
+              },
+              selected: true,
+            ),
           ),
-        ),
-        Card(
-          child: ListTile(
-            leading: FlutterLogo(size: 56.0),
-            title: Text('Exessrcice 5b'),
-            subtitle: Text('Moving Tiles in Grid'),
-            trailing: Icon(Icons.play_arrow),
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => Exercice5b(),
-                  ));
-            },
-            selected: true,
+          Card(
+            child: ListTile(
+              leading: FlutterLogo(size: 56.0),
+              title: Text(
+                'Moving Tiles',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              trailing: Icon(Icons.play_arrow),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Exercice5a(),
+                    ));
+              },
+              selected: true,
+            ),
           ),
-        ),
-        Card(
-          child: ListTile(
-            leading: FlutterLogo(size: 56.0),
-            title: Text('Exessrcice 6'),
-            subtitle: Text('Taquin Board'),
-            trailing: Icon(Icons.play_arrow),
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => Exercice6(),
-                  ));
-            },
-            selected: true,
+          Card(
+            child: ListTile(
+              leading: FlutterLogo(size: 56.0),
+              title: Text(
+                'Moving Tiles in Grid',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              trailing: Icon(Icons.play_arrow),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Exercice5b(),
+                    ));
+              },
+              selected: true,
+            ),
           ),
-        ),
-        Card(
-          child: ListTile(
-            leading: FlutterLogo(size: 56.0),
-            title: Text('Exessrcice 7'),
-            subtitle: Text('Taquin Board With Image'),
-            trailing: Icon(Icons.play_arrow),
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => Exercice7(),
-                  ));
-            },
-            selected: true,
+          Card(
+            child: ListTile(
+              leading: FlutterLogo(size: 56.0),
+              title: Text(
+                'Taquin Board',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              trailing: Icon(Icons.play_arrow),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Exercice6(),
+                    ));
+              },
+              selected: true,
+            ),
           ),
-        ),
+          Card(
+            child: ListTile(
+              leading: FlutterLogo(size: 56.0),
+              title: Text(
+                'Taquin Board With Image',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              trailing: Icon(Icons.play_arrow),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Exercice7(),
+                    ));
+              },
+              selected: true,
+            ),
+          ),
+        ])
       ],
-    );
+    ));
   }
 }

@@ -2,9 +2,32 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-import 'Tile1.dart';
+import 'main.dart';
 
 Random random = new Random();
+
+class Tile {
+  String imageURL;
+  Alignment alignment;
+
+  Tile({this.imageURL, this.alignment});
+
+  Widget croppedImageTile(widthF, heightF) {
+    return FittedBox(
+      fit: BoxFit.fill,
+      child: ClipRect(
+        child: Container(
+          child: Align(
+            alignment: this.alignment,
+            widthFactor: widthF,
+            heightFactor: heightF,
+            child: Image.asset(this.imageURL),
+          ),
+        ),
+      ),
+    );
+  }
+}
 
 class Exercice7 extends StatefulWidget {
   @override
@@ -13,42 +36,54 @@ class Exercice7 extends StatefulWidget {
 
 class _Exercice7State extends State<Exercice7> {
   final imageUrl = 'assets/images/Image.jpg';
-  int numberOfRows = 3;
+  int numberOfRows;
   static int isEmptyValue;
-
-  bool started = false;
-  int counter = 0;
+  List<Widget> liste;
+  bool started;
+  int counter;
 
   @override
-  Widget build(BuildContext context) {
-    final liste = <Widget>[];
+  void initState() {
+    super.initState();
+    numberOfRows = 3;
+    started = false;
+    counter = 0;
+  }
+
+  List<Widget> listeOfCroppedImage() {
+    liste = <Widget>[];
     for (double i = -1; i <= 1; i += 2 / (numberOfRows - 1)) {
       for (double j = -1; j <= 1; j += 2 / (numberOfRows - 1)) {
         liste.add(new Tile(imageURL: imageUrl, alignment: Alignment(j, i))
             .croppedImageTile(1 / numberOfRows, 1 / numberOfRows));
       }
     }
-    void swapTiles(int index) {
-      var tempValue;
-      var tempIndex;
-      tempValue = liste[isEmptyValue];
-      tempIndex = isEmptyValue;
-      liste[isEmptyValue] = liste[index];
-      isEmptyValue = index;
-      liste[index] = tempValue;
-      index = tempIndex;
-    }
+    return liste;
+  }
 
+  @override
+  Widget build(BuildContext context) {
+    listeOfCroppedImage();
     return Scaffold(
         appBar: AppBar(
-          title: Text('Exercice_6'),
+          title: Text('Taquin Board With Image'),
+          centerTitle: true,
+          leading: new IconButton(
+            icon: new Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => MyApp()),
+              );
+            },
+          ),
         ),
         body: Column(children: [
           new Expanded(
               child: GridView.count(
             primary: false,
             padding: const EdgeInsets.fromLTRB(20, 100, 20, 100),
-            crossAxisSpacing: 3,
+            crossAxisSpacing: 2,
             mainAxisSpacing: 2,
             crossAxisCount: numberOfRows,
             children: List.generate(
@@ -60,87 +95,94 @@ class _Exercice7State extends State<Exercice7> {
                           border: Border.all(
                               color: isEmptyValue == null || started == false
                                   ? Colors.transparent
-                                  : isClickable(index)
+                                  : isSwappable(index)
                                       ? Colors.red
                                       : Colors.transparent,
                               width: 2)),
                     ),
                     onTap: () {
                       setState(() {
-                        if (isClickable(index)) {
+                        if (isSwappable(index)) {
                           swapTiles(index);
                         }
                       });
                     })),
           )),
           Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-            SizedBox(
-                width: 40,
-                height: 40,
-                child: RaisedButton(
-                    padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                    color: Colors.blue,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(30))),
-                    child: IconButton(
-                        icon: Icon(Icons.horizontal_rule),
-                        color: Colors.white,
-                        onPressed: started
-                            ? null
-                            : () {
-                                setState(() {
-                                  if (numberOfRows > 2) {
-                                    numberOfRows--;
-                                  }
-                                });
-                              }),
-                    onPressed: started ? null : () {})),
-            SizedBox(
-                width: 40,
-                height: 40,
-                child: RaisedButton(
-                    padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                    color: Colors.blue,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(30))),
-                    child: IconButton(
-                        icon: started
-                            ? Icon(Icons.pause)
-                            : Icon(Icons.play_arrow),
-                        color: Colors.white,
-                        onPressed: () {
-                          setState(() {
-                            started = !started;
-                            counter++;
-                            if (counter <= 1) {
-                              isEmptyValue =
-                                  random.nextInt(pow(numberOfRows, 2) - 1);
-                            }
-                          });
-                        }),
-                    onPressed: () {})),
-            SizedBox(
-                width: 40,
-                height: 40,
-                child: RaisedButton(
-                  padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                  color: Colors.blue,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(30))),
-                  child: IconButton(
-                      icon: Icon(Icons.add),
-                      color: Colors.white,
-                      onPressed: started
-                          ? null
-                          : () {
-                              setState(() {
-                                if (numberOfRows < 10) {
-                                  numberOfRows++;
-                                }
-                              });
-                            }),
-                  onPressed: started ? null : () {},
-                )),
+            RawMaterialButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              elevation: 2.0,
+              fillColor: Colors.blue,
+              child: Icon(
+                Icons.arrow_back_ios,
+                size: 15.0,
+                color: Colors.white,
+              ),
+              padding: EdgeInsets.all(15.0),
+              shape: CircleBorder(),
+            ),
+            RawMaterialButton(
+              onPressed: started
+                  ? null
+                  : () {
+                      setState(() {
+                        if (numberOfRows > 2) {
+                          numberOfRows--;
+                        }
+                      });
+                    },
+              elevation: 2.0,
+              fillColor: Colors.blue,
+              child: Icon(
+                Icons.horizontal_rule,
+                size: 15.0,
+                color: Colors.white,
+              ),
+              padding: EdgeInsets.all(15.0),
+              shape: CircleBorder(),
+            ),
+            RawMaterialButton(
+              onPressed: () {
+                setState(() {
+                  started = !started;
+                  counter++;
+                  if (counter <= 1) {
+                    isEmptyValue = random.nextInt(pow(numberOfRows, 2) - 1);
+                  }
+                });
+              },
+              elevation: 2.0,
+              fillColor: Colors.blue,
+              child: Icon(
+                (started ? Icons.pause : Icons.play_arrow),
+                size: 15.0,
+                color: Colors.white,
+              ),
+              padding: EdgeInsets.all(15.0),
+              shape: CircleBorder(),
+            ),
+            RawMaterialButton(
+              onPressed: started
+                  ? null
+                  : () {
+                      setState(() {
+                        if (numberOfRows < 10) {
+                          numberOfRows++;
+                        }
+                      });
+                    },
+              elevation: 2.0,
+              fillColor: Colors.blue,
+              child: Icon(
+                Icons.add,
+                size: 15.0,
+                color: Colors.white,
+              ),
+              padding: EdgeInsets.all(15.0),
+              shape: CircleBorder(),
+            ),
           ]),
           SizedBox(
             height: 40,
@@ -148,7 +190,7 @@ class _Exercice7State extends State<Exercice7> {
         ]));
   }
 
-  bool isClickable(int index) {
+  bool isSwappable(int index) {
     return ((isEmptyValue != index) &&
         (((isEmptyValue % numberOfRows != 0) && (index + 1 == isEmptyValue)) ||
             (((isEmptyValue + 1) % numberOfRows != 0) &&
@@ -157,5 +199,15 @@ class _Exercice7State extends State<Exercice7> {
                 (index + numberOfRows == isEmptyValue))) ||
             (((isEmptyValue + numberOfRows < pow(numberOfRows, 2)) &&
                 (index - numberOfRows == isEmptyValue)))));
+  }
+
+  void swapTiles(int index) {
+    var tempValue;
+
+    tempValue = liste[isEmptyValue];
+
+    liste[isEmptyValue] = liste[index];
+    isEmptyValue = index;
+    liste[index] = tempValue;
   }
 }

@@ -3,6 +3,9 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
+import 'Exercice3.dart';
+import 'main.dart';
+
 class Exercice2b extends StatefulWidget {
   Exercice2b({Key key}) : super(key: key);
 
@@ -11,29 +14,29 @@ class Exercice2b extends StatefulWidget {
 }
 
 class _Exercice2bState extends State<Exercice2b> {
-  double _rotateXSliderValue;
-  double _rotateZSliderValue;
-  double _translateZSliderValue;
-  bool _mirror;
-  bool _play;
+  double rotateXSliderValue;
+  double rotateZSliderValue;
+  double translateZSliderValue;
+  bool mirror;
+  bool play;
 
   @override
   void initState() {
     super.initState();
-    _rotateXSliderValue = 0;
-    _rotateZSliderValue = 0;
-    _translateZSliderValue = 100;
-    _mirror = false;
-    _play = false;
+    rotateXSliderValue = 0;
+    rotateZSliderValue = 0;
+    translateZSliderValue = 100;
+    mirror = false;
+    play = false;
   }
 
   void animateRotationX(Timer t) {
-    if (_play == true) {
+    if (play == true) {
       setState(() {
-        if (_rotateXSliderValue < 180) {
-          _rotateXSliderValue++;
+        if (rotateXSliderValue < 180) {
+          rotateXSliderValue++;
         } else {
-          _rotateXSliderValue = 0;
+          rotateXSliderValue = 0;
           animateRotationX(t);
         }
       });
@@ -43,12 +46,12 @@ class _Exercice2bState extends State<Exercice2b> {
   }
 
   void animateRotationZ(Timer t) {
-    if (_play == true) {
+    if (play == true) {
       setState(() {
-        if (_rotateZSliderValue < 180) {
-          _rotateZSliderValue++;
+        if (rotateZSliderValue < 180) {
+          rotateZSliderValue++;
         } else {
-          _rotateZSliderValue = 0;
+          rotateZSliderValue = 0;
           animateRotationZ(t);
         }
       });
@@ -58,12 +61,12 @@ class _Exercice2bState extends State<Exercice2b> {
   }
 
   void animateTranslationZ(Timer t) {
-    if (_play == true) {
+    if (play == true) {
       setState(() {
-        if (_translateZSliderValue > 0) {
-          _translateZSliderValue--;
+        if (translateZSliderValue > 0) {
+          translateZSliderValue--;
         } else {
-          _translateZSliderValue = 100;
+          translateZSliderValue = 100;
           animateTranslationZ(t);
         }
       });
@@ -76,12 +79,21 @@ class _Exercice2bState extends State<Exercice2b> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Exercice_2'),
+          title: Text('Animated Rotate and Resize Image'),
+          centerTitle: true,
+          leading: new IconButton(
+            icon: new Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => MyApp()),
+              );
+            },
+          ),
         ),
-        body: Center(
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
+        body: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
               Container(
                 width: 400,
                 clipBehavior: Clip.hardEdge,
@@ -106,10 +118,10 @@ class _Exercice2bState extends State<Exercice2b> {
                     0,
                     1,
                   )
-                    ..rotateX(pi / 180 * _rotateXSliderValue)
-                    ..rotateY(_mirror ? pi : 0)
-                    ..rotateZ(pi / 180 * _rotateZSliderValue)
-                    ..scale(_translateZSliderValue / 100),
+                    ..rotateX(pi / 180 * rotateXSliderValue)
+                    ..rotateY(mirror ? pi : 0)
+                    ..rotateZ(pi / 180 * rotateZSliderValue)
+                    ..scale(translateZSliderValue / 100),
                   child: Image(
                     image: AssetImage('assets/images/Image.jpg'),
                   ),
@@ -117,7 +129,7 @@ class _Exercice2bState extends State<Exercice2b> {
               ),
               //),
               Container(
-                  width: 230,
+                  width: 250,
                   child: Column(children: [
                     Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                       Text(
@@ -128,13 +140,13 @@ class _Exercice2bState extends State<Exercice2b> {
                             color: Color(0xFF0A3068)),
                       ),
                       Slider(
-                        value: _rotateXSliderValue,
+                        value: rotateXSliderValue,
                         min: 0,
                         max: 180,
-                        label: _rotateXSliderValue.round().toString(),
+                        label: rotateXSliderValue.round().toString(),
                         onChanged: (double value) {
                           setState(() {
-                            _rotateXSliderValue = value;
+                            rotateXSliderValue = value;
                           });
                         },
                       )
@@ -148,18 +160,19 @@ class _Exercice2bState extends State<Exercice2b> {
                             color: Color(0xFF0A3068)),
                       ),
                       Slider(
-                        value: _rotateZSliderValue,
+                        value: rotateZSliderValue,
                         min: 0,
                         max: 180,
-                        label: _rotateZSliderValue.round().toString(),
+                        label: rotateZSliderValue.round().toString(),
                         onChanged: (double value) {
                           setState(() {
-                            _rotateZSliderValue = value;
+                            rotateZSliderValue = value;
                           });
                         },
                       )
                     ]),
                     Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                      SizedBox(width: 10),
                       Text(
                         'Mirror :',
                         style: TextStyle(
@@ -168,13 +181,13 @@ class _Exercice2bState extends State<Exercice2b> {
                             color: Color(0xFF0A3068)),
                       ),
                       SizedBox(
-                        width: 80,
+                        width: 70,
                       ),
                       Checkbox(
-                        value: _mirror,
+                        value: mirror,
                         onChanged: (value) {
                           setState(() {
-                            _mirror = !_mirror;
+                            mirror = !mirror;
                           });
                         },
                       ),
@@ -191,48 +204,79 @@ class _Exercice2bState extends State<Exercice2b> {
                         width: 10,
                       ),
                       Slider(
-                        value: _translateZSliderValue,
+                        value: translateZSliderValue,
                         min: 0,
                         max: 100,
-                        label: _translateZSliderValue.round().toString(),
+                        label: translateZSliderValue.round().toString(),
                         onChanged: (double value) {
                           setState(() {
-                            _translateZSliderValue = value;
+                            translateZSliderValue = value;
                           });
                         },
                       )
                     ]),
-                    SizedBox(
-                        width: 40,
-                        height: 40,
-                        child: RaisedButton(
-                          padding:
-                              EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                          color: Colors.blue,
-                          shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(30))),
-                          child: IconButton(
-                              icon: _play
-                                  ? Icon(Icons.pause)
-                                  : Icon(Icons.play_arrow),
-                              color: Colors.white,
-                              onPressed: () {
-                                setState(() {
-                                  _play = !_play;
-                                  Duration d1 = Duration(milliseconds: 20);
-                                  Duration d2 = Duration(milliseconds: 30);
-                                  Duration d3 = Duration(milliseconds: 10);
-                                  if (_play == true) {
-                                    Timer.periodic(d1, animateRotationX);
-                                    Timer.periodic(d2, animateRotationZ);
-                                    Timer.periodic(d3, animateTranslationZ);
-                                  }
-                                });
-                              }),
-                          onPressed: () {},
-                        )),
-                  ]))
-            ])));
+                    RawMaterialButton(
+                      onPressed: () {
+                        setState(() {
+                          play = !play;
+                          Duration d1 = Duration(milliseconds: 20);
+                          Duration d2 = Duration(milliseconds: 30);
+                          Duration d3 = Duration(milliseconds: 10);
+                          if (play == true) {
+                            Timer.periodic(d1, animateRotationX);
+                            Timer.periodic(d2, animateRotationZ);
+                            Timer.periodic(d3, animateTranslationZ);
+                          }
+                        });
+                      },
+                      elevation: 2.0,
+                      fillColor: Colors.blue,
+                      child: Icon(
+                        (play ? Icons.pause : Icons.play_arrow),
+                        size: 25.0,
+                        color: Colors.white,
+                      ),
+                      padding: EdgeInsets.all(15.0),
+                      shape: CircleBorder(),
+                    ),
+                  ])),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  RawMaterialButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    elevation: 2.0,
+                    fillColor: Colors.blue,
+                    child: Icon(
+                      Icons.arrow_back_ios,
+                      size: 25.0,
+                      color: Colors.white,
+                    ),
+                    padding: EdgeInsets.all(15.0),
+                    shape: CircleBorder(),
+                  ),
+                  RawMaterialButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Exercice3(),
+                          ));
+                    },
+                    elevation: 2.0,
+                    fillColor: Colors.blue,
+                    child: Icon(
+                      Icons.arrow_forward_ios,
+                      size: 25.0,
+                      color: Colors.white,
+                    ),
+                    padding: EdgeInsets.all(15.0),
+                    shape: CircleBorder(),
+                  ),
+                ],
+              )
+            ]));
   }
 }
