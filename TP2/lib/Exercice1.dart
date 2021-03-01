@@ -22,9 +22,11 @@ class Exercice1 extends StatelessWidget {
         ),
         body:
             Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-          const Image(
-            image: AssetImage('assets/images/Image.jpg'),
-          ),
+          Container(
+              width: 400,
+              child: Image(
+                image: AssetImage('assets/images/Image.jpg'),
+              )),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [

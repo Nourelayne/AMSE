@@ -105,10 +105,10 @@ class _Exercice6State extends State<Exercice6> {
                     ],
                   ),
                   SizedBox(
-                      height: 500, // constrain height
+                      height: 400, // constrain height
                       child: GridView.count(
                         primary: false,
-                        padding: const EdgeInsets.fromLTRB(20, 100, 20, 100),
+                        padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
                         crossAxisSpacing: 3,
                         mainAxisSpacing: 2,
                         crossAxisCount: numberOfRows,
@@ -189,7 +189,6 @@ class _Exercice6State extends State<Exercice6> {
                                     if (numberOfRows < 10) {
                                       numberOfRows++;
                                     }
-                                    print(numberOfRows);
                                   });
                                 },
                           elevation: 2.0,
