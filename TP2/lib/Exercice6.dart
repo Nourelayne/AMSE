@@ -20,7 +20,7 @@ class TileWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Text('Tile ${tile.number}'),
+      child: Text('${tile.number}'),
     );
   }
 }
@@ -67,79 +67,10 @@ class _Exercice6State extends State<Exercice6> {
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      RawMaterialButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        elevation: 2.0,
-                        fillColor: Colors.blue,
-                        child: Icon(
-                          Icons.arrow_back_ios,
-                          size: 25.0,
-                          color: Colors.white,
-                        ),
-                        padding: EdgeInsets.all(15.0),
-                        shape: CircleBorder(),
-                      ),
-                      RawMaterialButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => Exercice7(),
-                              ));
-                        },
-                        elevation: 2.0,
-                        fillColor: Colors.blue,
-                        child: Icon(
-                          Icons.arrow_forward_ios,
-                          size: 25.0,
-                          color: Colors.white,
-                        ),
-                        padding: EdgeInsets.all(15.0),
-                        shape: CircleBorder(),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                      height: 400, // constrain height
-                      child: GridView.count(
-                        primary: false,
-                        padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-                        crossAxisSpacing: 3,
-                        mainAxisSpacing: 2,
-                        crossAxisCount: numberOfRows,
-                        children: List.generate(
-                            pow(numberOfRows, 2),
-                            (index) => InkWell(
-                                child: Container(
-                                  child: liste[index],
-                                  decoration: BoxDecoration(
-                                      color: isEmptyValue == null
-                                          ? Colors.grey
-                                          : index == isEmptyValue
-                                              ? Colors.white
-                                              : Colors.grey,
-                                      border: Border.all(
-                                          color: isEmptyValue == null ||
-                                                  started == false
-                                              ? Colors.transparent
-                                              : isSwappable(index)
-                                                  ? Colors.red
-                                                  : Colors.transparent,
-                                          width: 5)),
-                                ),
-                                onTap: () {
-                                  swapTiles(index);
-                                })),
-                      )),
                   Center(
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
                         RawMaterialButton(
                           onPressed: started
                               ? null
@@ -201,7 +132,79 @@ class _Exercice6State extends State<Exercice6> {
                           padding: EdgeInsets.all(15.0),
                           shape: CircleBorder(),
                         ),
-                      ])),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                      height: 480, // constrain height
+                      child: GridView.count(
+                        primary: false,
+                        padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                        crossAxisSpacing: 3,
+                        mainAxisSpacing: 2,
+                        crossAxisCount: numberOfRows,
+                        children: List.generate(
+                            pow(numberOfRows, 2),
+                            (index) => InkWell(
+                                child: Container(
+                                  child: liste[index],
+                                  decoration: BoxDecoration(
+                                      color: isEmptyValue == null
+                                          ? Colors.grey
+                                          : index == isEmptyValue
+                                              ? Colors.white
+                                              : Colors.grey,
+                                      border: Border.all(
+                                          color: isEmptyValue == null ||
+                                                  started == false
+                                              ? Colors.transparent
+                                              : isSwappable(index)
+                                                  ? Colors.red
+                                                  : Colors.transparent,
+                                          width: 5)),
+                                ),
+                                onTap: () {
+                                  swapTiles(index);
+                                })),
+                      )),
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        RawMaterialButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          elevation: 2.0,
+                          fillColor: Colors.blue,
+                          child: Container(
+                              padding: EdgeInsets.only(left: 6),
+                              child: Icon(
+                                Icons.arrow_back_ios,
+                                size: 25.0,
+                                color: Colors.white,
+                              )),
+                          padding: EdgeInsets.all(15.0),
+                          shape: CircleBorder(),
+                        ),
+                        RawMaterialButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => Exercice7(),
+                                ));
+                          },
+                          elevation: 2.0,
+                          fillColor: Colors.blue,
+                          child: Icon(
+                            Icons.arrow_forward_ios,
+                            size: 25.0,
+                            color: Colors.white,
+                          ),
+                          padding: EdgeInsets.all(15.0),
+                          shape: CircleBorder(),
+                        ),
+                      ]),
                 ])));
   }
 

@@ -115,11 +115,13 @@ class _Exercice7State extends State<Exercice7> {
               },
               elevation: 2.0,
               fillColor: Colors.blue,
-              child: Icon(
-                Icons.arrow_back_ios,
-                size: 15.0,
-                color: Colors.white,
-              ),
+              child: Container(
+                  padding: EdgeInsets.only(left: 6),
+                  child: Icon(
+                    Icons.arrow_back_ios,
+                    size: 25.0,
+                    color: Colors.white,
+                  )),
               padding: EdgeInsets.all(15.0),
               shape: CircleBorder(),
             ),
